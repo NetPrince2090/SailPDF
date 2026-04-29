@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SailPDF</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="SailPDF home">
+        <span class="brand-mark">S</span>
+        <span>SailPDF</span>
+      </a>
+      <nav class="nav" aria-label="Strumenti principali">
+        <a href="#merge">Merge</a>
+        <a href="#split">Split</a>
+        <a href="#compress">Compress</a>
+        <a href="#pdf-to-images">PDF to Images</a>
+        <a href="#file-to-pdf">File to PDF</a>
+      </nav>
+    </header>
+
+    <main id="app" class="app"></main>
+
+    <template id="home-template">
+      <section class="hero">
+        <div class="hero-content">
+          <p class="eyebrow">PDF tools nel browser</p>
+          <h1>SailPDF</h1>
+          <p class="hero-copy">
+            Una pagina web semplice per unire, dividere, comprimere e convertire file PDF
+            con un flusso chiaro: scegli lo strumento, carica il file, scarica il risultato.
+          </p>
+        </div>
+      </section>
+
+      <section class="tool-grid-section" aria-labelledby="tools-title">
+        <div class="section-heading">
+          <p class="eyebrow">Scegli una funzione</p>
+          <h2 id="tools-title">Strumenti disponibili</h2>
+        </div>
+        <div class="tool-grid" data-tool-grid></div>
+      </section>
+    </template>
+
+    <template id="tool-template">
+      <section class="tool-page">
+        <a class="back-link" href="#home">← Tutti gli strumenti</a>
+        <div class="tool-layout">
+          <aside class="tool-intro">
+            <p class="eyebrow" data-tool-kicker></p>
+            <h1 data-tool-title></h1>
+            <p data-tool-description></p>
+            <ul class="feature-list" data-tool-features></ul>
+          </aside>
+
+          <section class="workspace" aria-label="Area di lavoro">
+            <div class="upload-zone" data-upload-zone>
+              <input data-file-input type="file" />
+              <div class="upload-icon" aria-hidden="true">+</div>
+              <h2 data-upload-title></h2>
+              <p data-upload-copy></p>
+              <button class="primary-button" type="button" data-upload-button>Seleziona file</button>
+            </div>
+
+            <div class="file-list" data-file-list hidden></div>
+            <div class="options-panel" data-options-panel></div>
+
+            <div class="actions">
+              <button class="secondary-button" type="button" data-reset-button>Ripulisci</button>
+              <button class="primary-button" type="button" data-process-button>Genera risultato</button>
+            </div>
+
+            <div class="result-panel" data-result-panel hidden>
+              <p class="result-title">Risultato</p>
+              <p data-result-copy></p>
+            </div>
+          </section>
+        </div>
+      </section>
+    </template>
+
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+    <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
