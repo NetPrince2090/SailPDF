@@ -70,6 +70,27 @@ select {
   color: #ffffff;
 }
 
+.partner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+  border: 1px solid rgba(217, 222, 219, 0.92);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 750;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+
+.partner-badge img {
+  display: block;
+  width: 42px;
+  height: auto;
+}
+
 .nav {
   display: flex;
   flex-wrap: wrap;
@@ -477,6 +498,10 @@ h2 {
     justify-content: flex-start;
   }
 
+  .partner-badge {
+    margin-right: 0;
+  }
+
   .hero {
     min-height: 52vh;
     padding: 56px 20px 34px;
@@ -498,6 +523,11 @@ h2 {
 }
 
 @media (max-width: 620px) {
+  .partner-badge {
+    align-self: stretch;
+    justify-content: space-between;
+  }
+
   .nav a {
     padding: 8px 10px;
   }
