@@ -1,6 +1,6 @@
 # SailPDF
 
-SailPDF e una pagina web dedicata alla lavorazione di file PDF direttamente dal browser.
+SailPDF e un servizio gratuito offerto da Tirelli Yacht, dedicato alla lavorazione di file PDF direttamente dal browser.
 Il servizio permette agli utenti di caricare documenti PDF, modificarne la struttura e scaricare nuovi file PDF generati dalle operazioni richieste.
 
 ## Obiettivo
