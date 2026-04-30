@@ -63,17 +63,17 @@ const tools = {
     title: "Compress PDF",
     kicker: "Riduci dimensioni",
     icon: "C",
-    description: "Riduci il peso di un PDF scegliendo un livello di compressione.",
+    description: "Riduci il peso di un PDF ricostruendo le pagine come immagini JPEG compresse.",
     uploadTitle: "Carica un PDF da comprimere",
-    uploadCopy: "Seleziona il documento e imposta quanto vuoi privilegiare qualita o dimensione finale.",
+    uploadCopy: "Seleziona il documento e imposta quanto vuoi privilegiare qualita o dimensione finale. Ideale per PDF scansionati o ricchi di immagini.",
     accept: "application/pdf",
     multiple: false,
     processLabel: "Comprimi PDF",
-    resultCopy: "La bozza mostra il controllo di compressione. L'ottimizzazione effettiva sara collegata in una fase successiva.",
+    resultCopy: "PDF compresso generato e scaricato.",
     features: [
       "Upload di un singolo PDF",
       "Scelta del livello di compressione",
-      "Confronto tra dimensione iniziale e finale",
+      "Compressione eseguita direttamente nel browser",
       "Download del PDF compresso"
     ],
     options: [
@@ -84,7 +84,7 @@ const tools = {
         min: 1,
         max: 3,
         value: 2,
-        hint: "1 qualita alta, 2 bilanciata, 3 file piu leggero."
+        hint: "1 qualita alta, 2 bilanciata, 3 file piu leggero. Il testo del PDF viene rasterizzato."
       }
     ]
   },
@@ -419,6 +419,55 @@ function compressionQuality(value) {
   }[value] || 0.82;
 }
 
+function pdfCompressionSettings(value) {
+  return {
+    1: { quality: 0.88, scale: 1.8 },
+    2: { quality: 0.72, scale: 1.45 },
+    3: { quality: 0.55, scale: 1.15 }
+  }[value] || { quality: 0.72, scale: 1.45 };
+}
+
+async function compressPdf(files) {
+  if (files.length !== 1) throw new Error("Carica un solo PDF da comprimere.");
+
+  const file = files[0];
+  const { quality, scale } = pdfCompressionSettings(getFieldValue("compression"));
+  const sourcePdf = await pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise;
+  const outputPdf = await PDFLib.PDFDocument.create();
+
+  for (let pageNumber = 1; pageNumber <= sourcePdf.numPages; pageNumber += 1) {
+    const sourcePage = await sourcePdf.getPage(pageNumber);
+    const pageSize = sourcePage.getViewport({ scale: 1 });
+    const renderSize = sourcePage.getViewport({ scale });
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d", { alpha: false });
+
+    canvas.width = Math.floor(renderSize.width);
+    canvas.height = Math.floor(renderSize.height);
+    context.fillStyle = "#fff";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    await sourcePage.render({ canvasContext: context, viewport: renderSize }).promise;
+
+    const imageBlob = await canvasToBlob(canvas, "image/jpeg", quality);
+    const image = await outputPdf.embedJpg(await imageBlob.arrayBuffer());
+    const outputPage = outputPdf.addPage([pageSize.width, pageSize.height]);
+    outputPage.drawImage(image, {
+      x: 0,
+      y: 0,
+      width: pageSize.width,
+      height: pageSize.height
+    });
+
+    canvas.width = 1;
+    canvas.height = 1;
+  }
+
+  const bytes = await outputPdf.save();
+  const originalName = makeSafeName(file.name);
+  downloadBlob(bytesToBlob(bytes), `${originalName}-compresso.pdf`);
+}
+
 async function normalizeImage(file, quality) {
   const bitmap = await createImageBitmap(file);
   const canvas = document.createElement("canvas");
@@ -467,8 +516,9 @@ async function processTool(toolId, files) {
 
   if (toolId === "merge") return mergePdfs(files);
   if (toolId === "split") return splitPdf(files);
-  if (toolId === "pdf-to-images") {
+  if (toolId === "compress" || toolId === "pdf-to-images") {
     if (!window.pdfjsLib) throw new Error("pdf.js non e disponibile. Controlla la connessione e ricarica la pagina.");
+    if (toolId === "compress") return compressPdf(files);
     return pdfToImages(files);
   }
   if (toolId === "file-to-pdf") return imagesToPdf(files);
