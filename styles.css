@@ -123,8 +123,8 @@ select {
   padding: 72px 32px 44px;
   color: #ffffff;
   background:
-    linear-gradient(90deg, rgba(15, 30, 28, 0.84), rgba(15, 30, 28, 0.28)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 700'%3E%3Crect width='1200' height='700' fill='%230b5f59'/%3E%3Cpath d='M0 450 C180 380 300 530 480 455 S820 330 1200 390 L1200 700 L0 700 Z' fill='%23f2f0e8' opacity='.22'/%3E%3Cpath d='M690 160 L880 212 L810 486 L620 434 Z' fill='%23ffffff' opacity='.9'/%3E%3Cpath d='M735 220 L835 248 M725 270 L820 296 M710 322 L805 348 M698 374 L790 400' stroke='%230c7c74' stroke-width='13' stroke-linecap='round' opacity='.72'/%3E%3Cpath d='M360 210 L540 255 L488 465 L308 420 Z' fill='%23f8dfb0' opacity='.95'/%3E%3Cpath d='M397 270 L503 296 M384 322 L490 348 M372 374 L475 400' stroke='%23e8644a' stroke-width='13' stroke-linecap='round' opacity='.76'/%3E%3Ccircle cx='958' cy='474' r='70' fill='%23d99a22' opacity='.85'/%3E%3C/svg%3E");
+    linear-gradient(90deg, rgba(7, 25, 36, 0.88), rgba(7, 25, 36, 0.48) 46%, rgba(7, 25, 36, 0.18)),
+    url("assets/sailpdf-hero.svg");
   background-position: center;
   background-size: cover;
 }
