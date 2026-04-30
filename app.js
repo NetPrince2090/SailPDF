@@ -65,7 +65,7 @@ const tools = {
     icon: "C",
     description: "Riduci il peso di un PDF ricostruendo le pagine come immagini JPEG compresse.",
     uploadTitle: "Carica un PDF da comprimere",
-    uploadCopy: "Seleziona il documento e imposta quanto vuoi privilegiare qualita o dimensione finale. Ideale per PDF scansionati o ricchi di immagini.",
+    uploadCopy: "Seleziona il documento e imposta quanto vuoi privilegiare qualita o dimensione finale. Attenzione: questa compressione rasterizza le pagine, quindi e ideale per PDF scansionati o ricchi di immagini, ma il testo potrebbe non restare selezionabile.",
     accept: "application/pdf",
     multiple: false,
     processLabel: "Comprimi PDF",
