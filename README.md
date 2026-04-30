@@ -109,10 +109,11 @@ La bozza ora include una prima implementazione reale lato browser:
 
 - Merge PDF: unisce piu PDF in un unico file usando `pdf-lib`;
 - Split PDF: divide un PDF in singole pagine dentro uno ZIP oppure estrae pagine selezionate in un nuovo PDF usando `pdf-lib` e `JSZip`;
+- Compress PDF: ricostruisce il PDF pagina per pagina come JPEG compresso usando `pdf.js` e `pdf-lib`;
 - PDF to Images: converte le pagine selezionate in JPEG usando `pdf.js`;
 - File to PDF: prima versione dedicata alle immagini, con una o piu immagini convertite in un PDF usando `pdf-lib`.
 
-La compressione PDF resta una funzione da implementare in una fase successiva. Una compressione PDF completa e affidabile richiede spesso un backend o strumenti specializzati; lato browser si puo comunque realizzare una versione base orientata soprattutto ai PDF composti da immagini.
+La compressione PDF attuale e una prima versione lato browser, pensata soprattutto per PDF scansionati o ricchi di immagini. Per ridurre il peso rasterizza le pagine: il testo del PDF compresso potrebbe quindi non restare selezionabile.
 
 Le librerie sono caricate da CDN nella pagina HTML, quindi per usare il motore PDF serve una connessione internet attiva.
 
